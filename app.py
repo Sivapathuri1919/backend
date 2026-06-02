@@ -5,7 +5,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import firebase_admin
 from firebase_admin import credentials, firestore
-from backend.questions import QUESTIONS
+from questions import QUESTIONS
 
 app = Flask(__name__)
 CORS(app)
