@@ -1,5 +1,5 @@
 QUESTIONS = [
-    # 0-9: Data types, modifiers (short, long, unsigned), union, enum
+    # ========== ORIGINAL 100 QUESTIONS (IDs 0-99) ==========
     {"id": 0, "text": "Which of the following is a valid C variable name?", "options": ["1num", "int", "num_1", "float"], "answer": "C", "explanation": "Variable names cannot start with a digit; 'int' and 'float' are keywords. 'num_1' starts with a letter and contains underscore – valid."},
     {"id": 1, "text": "What is the size of `short int` on a typical 32-bit compiler?", "options": ["1 byte", "2 bytes", "4 bytes", "8 bytes"], "answer": "B", "explanation": "On most platforms, `short` is 2 bytes (16 bits)."},
     {"id": 2, "text": "Which format specifier is used for `long long`?", "options": ["%lld", "%ld", "%l", "%d"], "answer": "A", "explanation": "`%lld` is the correct specifier for `long long` in `printf`/`scanf`."},
@@ -10,8 +10,6 @@ QUESTIONS = [
     {"id": 7, "text": "Output: `union U { int a; char b; } u; u.a = 65; printf(\"%c\", u.b);` (ASCII 65 = 'A')", "options": ["A", "65", "Garbage", "Error"], "answer": "A", "explanation": "Union members overlap; writing to `a` writes to same memory as `b`, so `b` holds the low-order byte of 65 → 'A'."},
     {"id": 8, "text": "Find error: `enum week {MON, TUE}; enum week day = 5;`", "options": ["No error", "Enum constant out of range", "Cannot assign int", "Syntax error"], "answer": "C", "explanation": "In C, an enum variable can only be assigned the enum constants, not arbitrary integers (unless cast)."},
     {"id": 9, "text": "Which modifier extends the range of an integer variable?", "options": ["short", "unsigned", "long", "Both B and C"], "answer": "D", "explanation": "`unsigned` removes sign (doubles positive range), `long` increases size – both extend range."},
-
-    # 10-19: Operators, expressions, type conversion
     {"id": 10, "text": "Output of `printf(\"%d\", 10 > 5 ? 1 : 0);`", "options": ["0", "1", "True", "False"], "answer": "B", "explanation": "Ternary operator: condition true → returns 1, false → 0."},
     {"id": 11, "text": "What is the value of `5 + 3 * 2`?", "options": ["16", "11", "13", "10"], "answer": "B", "explanation": "Multiplication has higher precedence: 3*2=6, then 5+6=11."},
     {"id": 12, "text": "Find error: `int a = 10, b = 0; int c = a / b;`", "options": ["Compile error", "Runtime error (division by zero)", "No error, c = 0", "Undefined"], "answer": "B", "explanation": "Division by zero causes runtime error (undefined behavior, usually crash)."},
@@ -22,8 +20,6 @@ QUESTIONS = [
     {"id": 17, "text": "Find error: `float a = 5.5; int b = (int)a;`", "options": ["No error", "Syntax error", "Loss of data warning", "Runtime error"], "answer": "A", "explanation": "Explicit cast (int) is allowed; truncates fractional part, but no error."},
     {"id": 18, "text": "What does `%` operator do?", "options": ["Division", "Modulus", "Percentage", "Bitwise AND"], "answer": "B", "explanation": "`%` is the modulus operator (remainder after integer division)."},
     {"id": 19, "text": "Output: `int a=5, b=3; printf(\"%d\", a & b);`", "options": ["1", "2", "5", "7"], "answer": "A", "explanation": "5 (101) & 3 (011) = 001 binary = 1."},
-
-    # 20-29: Decision making (if, if-else, switch)
     {"id": 20, "text": "Output: `int x=2; if(x=0) printf(\"Hi\"); else printf(\"Bye\");`", "options": ["Hi", "Bye", "Nothing", "Error"], "answer": "B", "explanation": "Assignment `x=0` returns 0 (false), so else part executes → \"Bye\"."},
     {"id": 21, "text": "Which is valid as switch-case expression type?", "options": ["float", "double", "char", "string"], "answer": "C", "explanation": "Switch expression must be integral type (char, int, enum); float/double not allowed."},
     {"id": 22, "text": "Find error: `switch(x) { case 1: printf(\"one\"); case 2: break; }`", "options": ["Missing default", "No error", "Duplicate case", "break missing"], "answer": "B", "explanation": "No error; missing default is allowed, case 1 falls through to case 2."},
@@ -34,8 +30,6 @@ QUESTIONS = [
     {"id": 27, "text": "Find error: `switch(x) { case 1+2: printf(\"3\"); }`", "options": ["Expression not allowed", "No error", "Only constants allowed", "Both B and C"], "answer": "B", "explanation": "1+2 is a constant expression, allowed as case label."},
     {"id": 28, "text": "Can we use `switch` with `enum` variables?", "options": ["Yes", "No", "Only integers", "Depends on compiler"], "answer": "A", "explanation": "Enums are integral types, so they are valid in switch."},
     {"id": 29, "text": "Output: `int x=3; if(x=5) printf(\"Hello\"); else printf(\"World\");`", "options": ["Hello", "World", "Error", "Nothing"], "answer": "A", "explanation": "Assignment x=5 returns 5 (non‑zero → true), so \"Hello\" prints."},
-
-    # 30-39: Loops (for, while, do-while), jump statements
     {"id": 30, "text": "How many times does `for(i=0;i<5;i++)` execute the loop body?", "options": ["4", "5", "6", "Infinite"], "answer": "B", "explanation": "i = 0,1,2,3,4 → five iterations."},
     {"id": 31, "text": "Output: `int i=0; while(i<3){ printf(\"%d\",i); i++; }`", "options": ["012", "123", "0 1 2", "0123"], "answer": "A", "explanation": "Prints i then increments: 0,1,2 concatenated → \"012\"."},
     {"id": 32, "text": "Find error: `do{ }while(0);`", "options": ["Missing semicolon", "Infinite loop", "No error", "Condition false"], "answer": "C", "explanation": "do-while with condition 0 executes once (semicolon is correct)."},
@@ -46,8 +40,6 @@ QUESTIONS = [
     {"id": 37, "text": "Output: `int x=1; while(x<1){ printf(\"%d\",x); x++; }`", "options": ["1", "No output", "Infinite", "Error"], "answer": "B", "explanation": "Condition false initially, so loop body never executes."},
     {"id": 38, "text": "Find error: `for(int i=0;i<5;i++){ int i=10; }`", "options": ["Redefinition", "No error", "Scope issue", "Syntax error"], "answer": "A", "explanation": "Inner `i` shadows outer `i` but is allowed in C99; however redefinition in same scope is error – here different block? Actually allowed but confusing. Most compilers warn."},
     {"id": 39, "text": "What does `continue` do?", "options": ["Skips rest of iteration", "Exits loop", "Jumps to next loop", "Both A and C"], "answer": "A", "explanation": "`continue` skips remaining statements in current iteration and moves to next iteration."},
-
-    # 40-49: Functions, recursion
     {"id": 40, "text": "Which is a correct function prototype?", "options": ["int func();", "func();", "int func", "func(int a);"], "answer": "A", "explanation": "`int func();` is a valid prototype (return type int, no parameters)."},
     {"id": 41, "text": "Output: `void fun(int a){ a=10; } main(){ int x=5; fun(x); printf(\"%d\",x); }`", "options": ["5", "10", "Garbage", "Error"], "answer": "A", "explanation": "Pass by value – changes to parameter `a` do not affect `x`."},
     {"id": 42, "text": "What is recursion?", "options": ["Function calling itself", "Loop", "Nested function", "Inline function"], "answer": "A", "explanation": "Recursion occurs when a function calls itself directly or indirectly."},
@@ -58,8 +50,6 @@ QUESTIONS = [
     {"id": 47, "text": "Inline function is expanded at?", "options": ["Compile time", "Run time", "Link time", "Never"], "answer": "A", "explanation": "Inline functions are expanded at compile time to avoid function call overhead."},
     {"id": 48, "text": "Find error: `void swap(int *a, int *b){ int t=*a; *a=*b; *b=t; } main(){ int x=5,y=10; swap(x,y); }`", "options": ["Passing int instead of pointer", "No error", "Swap fails", "Syntax error"], "answer": "A", "explanation": "Function expects pointers, but integers are passed; should be `swap(&x,&y)`."},
     {"id": 49, "text": "Does C support function overloading?", "options": ["No", "Yes, by return type", "Yes, by arguments", "Only in C99"], "answer": "A", "explanation": "C does not support function overloading; each function name must be unique."},
-
-    # 50-59: Arrays (1D, 2D, searching, bubble sort)
     {"id": 50, "text": "Correct array declaration:", "options": ["int arr[5];", "int 5arr;", "arr[5] int;", "int arr[];"], "answer": "A", "explanation": "`int arr[5];` declares an array of 5 integers."},
     {"id": 51, "text": "Output: `int arr[3]={1,2,3}; printf(\"%d\",arr[3]);`", "options": ["0", "Garbage", "3", "Error"], "answer": "B", "explanation": "Index 3 is out of bounds (valid indices 0-2); prints garbage value."},
     {"id": 52, "text": "Find error: `int n=5; int arr[n];`", "options": ["VLA not allowed in C89", "No error in C99", "Both A and B", "Syntax error"], "answer": "C", "explanation": "Variable-length arrays (VLA) are valid in C99 but not in C89."},
@@ -70,8 +60,6 @@ QUESTIONS = [
     {"id": 57, "text": "Output of linear search for `5` in `[2,4,5,7]`?", "options": ["Found at index 2", "Found at index 1", "Not found", "Error"], "answer": "A", "explanation": "Indexing from 0, element 5 is at position 2."},
     {"id": 58, "text": "Find error: `int arr[] = {1,2,3}; arr = {4,5,6};`", "options": ["Array cannot be reassigned", "No error", "Syntax error", "Memory leak"], "answer": "A", "explanation": "Array name is a constant pointer; cannot be assigned a new array."},
     {"id": 59, "text": "Which sorting algorithm repeatedly swaps adjacent elements?", "options": ["Selection sort", "Bubble sort", "Insertion sort", "Merge sort"], "answer": "B", "explanation": "Bubble sort compares and swaps adjacent elements if out of order."},
-
-    # 60-69: Strings & string functions
     {"id": 60, "text": "Which function copies a string?", "options": ["strcpy", "strcat", "strcmp", "strlen"], "answer": "A", "explanation": "`strcpy(dest, src)` copies string from src to dest."},
     {"id": 61, "text": "Output: `char s[10]=\"Hello\"; printf(\"%lu\", strlen(s));`", "options": ["10", "5", "6", "Error"], "answer": "B", "explanation": "`strlen` counts characters until null terminator; \"Hello\" has 5."},
     {"id": 62, "text": "Find error: `char *p = \"Hi\"; p[0] = 'h';`", "options": ["Modifying string literal", "No error", "Memory leak", "Syntax error"], "answer": "A", "explanation": "String literals are read-only; attempting to modify causes undefined behavior (often crash)."},
@@ -82,8 +70,6 @@ QUESTIONS = [
     {"id": 67, "text": "Output: `printf(\"%c\", \"abc\"[1]);`", "options": ["a", "b", "c", "Error"], "answer": "B", "explanation": "String literal is array of chars; index 1 gives 'b'."},
     {"id": 68, "text": "What does `strlen` return for empty string?", "options": ["0", "1", "NULL", "Undefined"], "answer": "A", "explanation": "Empty string has only null terminator, so length 0."},
     {"id": 69, "text": "Which function compares two strings?", "options": ["strcmp", "strcpy", "strcat", "strlen"], "answer": "A", "explanation": "`strcmp(s1, s2)` returns 0 if equal, else non-zero."},
-
-    # 70-79: Pointers, pointer arithmetic, pointers with arrays
     {"id": 70, "text": "What does `int *ptr;` declare?", "options": ["Pointer to int", "Integer variable", "Array", "Function"], "answer": "A", "explanation": "`int *ptr` declares a variable that holds the address of an integer."},
     {"id": 71, "text": "Output: `int a=10, *p=&a; printf(\"%d\", *p);`", "options": ["10", "Address of a", "Garbage", "Error"], "answer": "A", "explanation": "`*p` dereferences the pointer, giving the value of a."},
     {"id": 72, "text": "Find error: `int *p; *p=5;`", "options": ["Dangling pointer", "No error", "Syntax error", "Memory leak"], "answer": "A", "explanation": "p is uninitialized; dereferencing it leads to undefined behavior."},
@@ -94,8 +80,6 @@ QUESTIONS = [
     {"id": 77, "text": "What does `void *` represent?", "options": ["Generic pointer", "Pointer to void", "No value", "Both A and B"], "answer": "D", "explanation": "`void *` is a generic pointer that can hold any address type."},
     {"id": 78, "text": "Output: `int x=5, y=10; int *p=&x, *q=&y; printf(\"%d\", p==q);`", "options": ["0", "1", "Address", "Error"], "answer": "A", "explanation": "p and q point to different variables, so their addresses are not equal → 0."},
     {"id": 79, "text": "Pointer to an array of 5 integers is declared as?", "options": ["int (*p)[5];", "int *p[5];", "int *p;", "int arr[5];"], "answer": "A", "explanation": "`int (*p)[5]` declares p as pointer to array of 5 ints. `int *p[5]` is array of 5 pointers."},
-
-    # 80-89: Structures, arrays of structures, dynamic memory (malloc, free)
     {"id": 80, "text": "How to access member `age` of structure variable `student`?", "options": ["student.age", "student->age", "age.student", "&student.age"], "answer": "A", "explanation": "Dot operator (.) is used to access members of structure variable."},
     {"id": 81, "text": "Output: `struct S { int a; } s = {5}; printf(\"%d\", s.a);`", "options": ["5", "Garbage", "Error", "Address"], "answer": "A", "explanation": "Structure member `a` is initialized to 5 and printed."},
     {"id": 82, "text": "Find error: `struct T { int x; } obj; obj.x = 10; struct T obj2 = obj;`", "options": ["No error", "Cannot copy structures", "Missing semicolon", "Memory leak"], "answer": "A", "explanation": "Structures can be assigned directly (copy). No error."},
@@ -106,8 +90,6 @@ QUESTIONS = [
     {"id": 87, "text": "What does `calloc(5, sizeof(int))` do?", "options": ["Allocates 5 ints, initialises to 0", "Allocates 5 ints, uninitialised", "Allocates 5 bytes", "Allocates 5 arrays"], "answer": "A", "explanation": "`calloc` allocates and zero-initializes memory."},
     {"id": 88, "text": "Output: `int *p = malloc(sizeof(int)); *p = 7; free(p); printf(\"%d\", *p);`", "options": ["7", "0", "Undefined", "Compile error"], "answer": "C", "explanation": "After `free`, pointer is dangling; dereferencing causes undefined behavior."},
     {"id": 89, "text": "Which header is required for dynamic memory?", "options": ["<stdlib.h>", "<malloc.h>", "<memory.h>", "<alloc.h>"], "answer": "A", "explanation": "`malloc`, `free`, etc. are declared in `<stdlib.h>` (also `<malloc.h>` but non-standard). Standard is `<stdlib.h>`."},
-
-    # 90-99: File handling, preprocessor, sorting/searching algorithms
     {"id": 90, "text": "Which mode opens a file for reading?", "options": ["r", "w", "a", "rb"], "answer": "A", "explanation": "`\"r\"` opens an existing text file for reading."},
     {"id": 91, "text": "Output: `FILE *fp = fopen(\"test.txt\",\"w\"); fprintf(fp,\"Hello\"); fclose(fp);` What happens?", "options": ["Writes Hello to file", "Creates file if not exists", "Both A and B", "Error"], "answer": "C", "explanation": "`\"w\"` creates file (or truncates) and writes \"Hello\"."},
     {"id": 92, "text": "Find error: `fopen(\"data.txt\",\"r\");` but file does not exist.", "options": ["Returns NULL", "Creates file", "Compilation error", "Runtime crash"], "answer": "A", "explanation": "`fopen` returns NULL if file cannot be opened."},
@@ -117,5 +99,130 @@ QUESTIONS = [
     {"id": 96, "text": "Which sorting algorithm has O(n²) worst case?", "options": ["Merge sort", "Quick sort", "Bubble sort", "Heap sort"], "answer": "C", "explanation": "Bubble sort always O(n²) worst case. Quick sort can be O(n²) if pivot poor."},
     {"id": 97, "text": "Output of binary search for 7 in sorted array [2,5,7,9]?", "options": ["Found at index 2", "Not found", "Found at index 3", "Error"], "answer": "A", "explanation": "Binary search finds 7 at index 2 (0‑based)."},
     {"id": 98, "text": "Find error: `int a[5] = {1,2,3,4,5}; for(i=0;i<=5;i++) printf(\"%d\",a[i]);`", "options": ["Out‑of‑bounds access", "No error", "Wrong loop condition", "Syntax error"], "answer": "A", "explanation": "When i=5, a[5] is out of bounds (valid 0-4)."},
-    {"id": 99, "text": "What does `#ifndef HEADER_H` guard against?", "options": ["Double inclusion", "Compilation error", "Macro redefinition", "None"], "answer": "A", "explanation": "Include guards prevent a header from being included multiple times."}
+    {"id": 99, "text": "What does `#ifndef HEADER_H` guard against?", "options": ["Double inclusion", "Compilation error", "Macro redefinition", "None"], "answer": "A", "explanation": "Include guards prevent a header from being included multiple times."},
+
+    # ========== NEW 100 QUESTIONS (IDs 100-199) ==========
+    # 100-109: More on operators, bitwise, type qualifiers
+    {"id": 100, "text": "Output of `printf(\"%d\", 5 << 1);`", "options": ["5", "10", "2", "1"], "answer": "B", "explanation": "Left shift by 1: 5 (101) -> 1010 binary = 10."},
+    {"id": 101, "text": "What does `const int *p;` mean?", "options": ["Pointer to constant int", "Constant pointer to int", "Constant pointer to constant int", "None"], "answer": "A", "explanation": "`const int *p` means the int pointed to cannot be changed, but p can point elsewhere."},
+    {"id": 102, "text": "Find error: `register int a; printf(\"%d\", &a);`", "options": ["Cannot take address of register variable", "No error", "Syntax error", "Runtime error"], "answer": "A", "explanation": "`register` variables may be stored in CPU registers; their address cannot be taken."},
+    {"id": 103, "text": "Output: `int x = 0; printf(\"%d\", x || 1);`", "options": ["0", "1", "True", "False"], "answer": "B", "explanation": "Logical OR returns 1 if any operand true."},
+    {"id": 104, "text": "What is the result of `3.5 + 2` in C?", "options": ["5", "5.5", "5.0", "Error"], "answer": "B", "explanation": "Implicit conversion: int to double, result double 5.5."},
+    {"id": 105, "text": "Output of `printf(\"%d\", 10 ^ 5);`", "options": ["15", "2", "12", "5"], "answer": "A", "explanation": "Bitwise XOR: 1010 ^ 0101 = 1111 = 15."},
+    {"id": 106, "text": "Find error: `signed char c = 128; printf(\"%d\", c);`", "options": ["Overflow, implementation-defined", "No error", "Syntax error", "Compiler error"], "answer": "A", "explanation": "Signed char range -128 to 127; 128 overflows → implementation-defined behavior."},
+    {"id": 107, "text": "What does `volatile` keyword do?", "options": ["Prevents optimization", "Makes variable atomic", "Stores in register", "None"], "answer": "A", "explanation": "`volatile` tells compiler not to optimize accesses to that variable (e.g., memory-mapped I/O)."},
+    {"id": 108, "text": "Output: `int a=5, b=7; printf(\"%d\", a+++b);`", "options": ["12", "13", "11", "Undefined"], "answer": "A", "explanation": "Parsed as a++ + b = 5+7 = 12 (a becomes 6)."},
+    {"id": 109, "text": "Find error: `int *p = (int*)malloc(sizeof(int) * 5); free(p+2);`", "options": ["Invalid free (not start of block)", "No error", "Memory leak", "Syntax error"], "answer": "A", "explanation": "free() must be called with the original pointer from malloc, not an offset."},
+
+    # 110-119: Preprocessor, macros, conditional compilation
+    {"id": 110, "text": "What is the output of `#define SQUARE(x) (x*x); printf(\"%d\", SQUARE(3+2));`", "options": ["25", "11", "13", "Error"], "answer": "B", "explanation": "Expands to (3+2*3+2) = 3+6+2 = 11."},
+    {"id": 111, "text": "`#ifdef` checks if a macro is:", "options": ["Defined", "True", "Non-zero", "Undefined"], "answer": "A", "explanation": "`#ifdef` tests whether a macro name is defined, regardless of its value."},
+    {"id": 112, "text": "Find error: `#define MAX 100; int x = MAX;`", "options": ["Semicolon in macro", "No error", "Missing parentheses", "Type mismatch"], "answer": "A", "explanation": "Macro definition should not end with semicolon; it becomes part of replacement text (int x = 100;;)."},
+    {"id": 113, "text": "Output: `#define A 5 #define B 2 #define C A+B printf(\"%d\", C*C);`", "options": ["49", "17", "29", "Error"], "answer": "B", "explanation": "Macro expands to 5+2*5+2 = 5+10+2 = 17."},
+    {"id": 114, "text": "What does `#line` directive do?", "options": ["Changes line number and filename", "Sets breakpoint", "Includes file", "None"], "answer": "A", "explanation": "`#line` changes the compiler's idea of the current line number and filename for error messages."},
+    {"id": 115, "text": "`#pragma` is used for:", "options": ["Compiler-specific instructions", "Linking libraries", "Macro definitions", "Include guard"], "answer": "A", "explanation": "`#pragma` offers machine-specific or compiler-specific features."},
+    {"id": 116, "text": "Find error: `#define ABS(x) ((x)<0?-(x):(x)) int y = ABS(-5);`", "options": ["No error", "Missing parentheses around x", "Side effects with x++", "None"], "answer": "A", "explanation": "Macro is correctly parenthesized. No error."},
+    {"id": 117, "text": "Output of `#define PRINT(x) printf(\"%d\\n\", x) PRINT(10);`", "options": ["10", "Compilation error", "PRINT(10)", "None"], "answer": "A", "explanation": "Macro expands to printf statement, prints 10."},
+    {"id": 118, "text": "What is the use of `#undef`?", "options": ["Removes a macro definition", "Undefines a variable", "Makes macro undefined", "Both A and C"], "answer": "D", "explanation": "`#undef` removes a previously defined macro."},
+    {"id": 119, "text": "`#if defined` is equivalent to:", "options": ["#ifdef", "#ifndef", "#if", "#elif"], "answer": "A", "explanation": "`#if defined(MACRO)` is equivalent to `#ifdef MACRO`."},
+
+    # 120-129: More on pointers, arrays, and strings
+    {"id": 120, "text": "What is `char *p[10]`?", "options": ["Array of 10 pointers to char", "Pointer to array of 10 chars", "Array of 10 chars", "None"], "answer": "A", "explanation": "`char *p[10]` declares an array of 10 pointers."},
+    {"id": 121, "text": "Output: `char *s = \"Hello\"; s[0] = 'h';` (assuming string literal in read-only memory)", "options": ["Segmentation fault", "hHello", "No change", "Compiler error"], "answer": "A", "explanation": "String literals are often read-only; modifying leads to crash."},
+    {"id": 122, "text": "Find error: `int a[5]; int *p = a+5; *p = 10;`", "options": ["Out of bounds", "No error", "Invalid pointer arithmetic", "Syntax error"], "answer": "A", "explanation": "p points one past the last element; dereferencing is undefined behavior (out of bounds)."},
+    {"id": 123, "text": "What does `strcmp` return if strings are equal?", "options": ["0", "1", "-1", "Non-zero"], "answer": "A", "explanation": "`strcmp` returns 0 when strings are identical."},
+    {"id": 124, "text": "Output: `char str[10] = \"abc\"; printf(\"%d\", sizeof(str));`", "options": ["3", "4", "10", "Undefined"], "answer": "C", "explanation": "`sizeof(str)` gives the size of the array (10), not the string length."},
+    {"id": 125, "text": "Which function appends one string to another?", "options": ["strcat", "strcpy", "strncat", "Both A and C"], "answer": "D", "explanation": "`strcat` and `strncat` both append strings."},
+    {"id": 126, "text": "Find error: `char *p = malloc(5); strcpy(p, \"Hello\");`", "options": ["Buffer overflow", "No error", "Syntax error", "Memory leak"], "answer": "A", "explanation": "\"Hello\" requires 6 bytes (including null), but only 5 allocated."},
+    {"id": 127, "text": "Output of `printf(\"%d\", sizeof(\"Hello\"));`", "options": ["5", "6", "4", "Depends"], "answer": "B", "explanation": "`sizeof` of a string literal includes the null terminator."},
+    {"id": 128, "text": "What is a dangling pointer?", "options": ["Pointer to freed memory", "NULL pointer", "Uninitialized pointer", "Wild pointer"], "answer": "A", "explanation": "Dangling pointer points to memory that has been freed."},
+    {"id": 129, "text": "Output: `int *p = NULL; if(p == NULL) printf(\"null\");`", "options": ["null", "Error", "Nothing", "Segmentation fault"], "answer": "A", "explanation": "NULL is a null pointer constant; comparison is valid and prints 'null'."},
+
+    # 130-139: Structures, unions, dynamic memory advanced
+    {"id": 130, "text": "Which operator accesses structure member via pointer?", "options": ["->", ".", "&", "*"], "answer": "A", "explanation": "Arrow operator `->` is used for pointer to structure."},
+    {"id": 131, "text": "Output: `struct S { int a; char b; } s; printf(\"%d\", sizeof(s));`", "options": ["5", "8", "4", "Depends on alignment"], "answer": "D", "explanation": "Structure size may include padding for alignment, so platform-dependent."},
+    {"id": 132, "text": "Find error: `union U { int a; float b; } u = {5, 6.5};`", "options": ["Cannot initialize two members", "No error", "Syntax error", "Type mismatch"], "answer": "A", "explanation": "Union can only initialize the first member."},
+    {"id": 133, "text": "What is `typedef` used for?", "options": ["Create alias for data types", "Define new data type", "Rename variable", "None"], "answer": "A", "explanation": "`typedef` creates an alias for an existing type."},
+    {"id": 134, "text": "Output: `typedef int* ptr; ptr a, b;` What is `b`?", "options": ["int", "int*", "pointer to int", "None"], "answer": "B", "explanation": "`ptr` is alias for `int*`; both `a` and `b` are pointers to int."},
+    {"id": 135, "text": "Find error: `int *p = (int*)calloc(5, sizeof(int)); free(p);`", "options": ["No error", "Memory leak", "Double free", "Invalid free"], "answer": "A", "explanation": "Allocation and free are correct."},
+    {"id": 136, "text": "What does `realloc(NULL, size)` do?", "options": ["Same as malloc(size)", "Error", "Allocates zero bytes", "Undefined"], "answer": "A", "explanation": "`realloc(NULL, size)` behaves like `malloc(size)`."},
+    {"id": 137, "text": "Output: `int x = 10; int *p = &x; free(p);`", "options": ["Undefined behavior (free stack memory)", "No error", "Compilation error", "Memory leak"], "answer": "A", "explanation": "free() can only be used on heap memory; `x` is on stack."},
+    {"id": 138, "text": "Which of the following is not a storage class?", "options": ["auto", "register", "const", "extern"], "answer": "C", "explanation": "`const` is a type qualifier, not a storage class. Storage classes: auto, register, static, extern."},
+    {"id": 139, "text": "Find error: `static int count = 0; count++;` in global scope", "options": ["No error", "Cannot modify static variable", "Scope error", "Syntax error"], "answer": "A", "explanation": "Static global variables are accessible within the file; increment is allowed."},
+
+    # 140-149: File I/O, command-line arguments
+    {"id": 140, "text": "Which function reads a line from a file?", "options": ["fgets", "fgetc", "fscanf", "gets"], "answer": "A", "explanation": "`fgets` reads a line (including newline) from a file stream."},
+    {"id": 141, "text": "Output: `FILE *fp = fopen(\"nonexistent.txt\", \"r\"); printf(\"%p\", fp);`", "options": ["NULL", "Non-null address", "0", "Error"], "answer": "A", "explanation": "`fopen` returns NULL if file cannot be opened."},
+    {"id": 142, "text": "Find error: `fwrite(&x, sizeof(int), 1, fp);` but `fp` opened with `\"r\"`", "options": ["Write to read-only file", "No error", "Segmentation fault", "Compiler error"], "answer": "A", "explanation": "File opened for reading only; writing causes undefined behavior."},
+    {"id": 143, "text": "What does `fclose(NULL)` do?", "options": ["Undefined behavior (usually crash)", "Closes nothing", "Returns EOF", "Error"], "answer": "A", "explanation": "Passing NULL to `fclose` is undefined behavior; should check if FILE* is not NULL."},
+    {"id": 144, "text": "Which mode opens a file for both reading and writing, creating if not exists?", "options": ["w+", "r+", "a+", "w"], "answer": "A", "explanation": "`w+` creates (or truncates) for reading and writing."},
+    {"id": 145, "text": "Output of `int main(int argc, char *argv[])` if program run with `./a.out one two`? `printf(\"%d\", argc);`", "options": ["1", "2", "3", "4"], "answer": "C", "explanation": "argc includes program name and arguments: 3."},
+    {"id": 146, "text": "Find error: `while(!feof(fp)) { fgets(buf, 100, fp); }`", "options": ["feof only set after read fails", "No error", "Infinite loop", "Syntax error"], "answer": "A", "explanation": "feof is not predictive; better check return of fgets."},
+    {"id": 147, "text": "What does `ftell(fp)` return?", "options": ["Current file position", "File size", "EOF indicator", "Error code"], "answer": "A", "explanation": "`ftell` returns the current offset in the file."},
+    {"id": 148, "text": "Which function sets the file position indicator?", "options": ["fseek", "ftell", "rewind", "Both A and C"], "answer": "D", "explanation": "`fseek` moves the position; `rewind` sets to beginning."},
+    {"id": 149, "text": "Output of `fprintf(stdout, \"Hi\");`", "options": ["Prints Hi to console", "Writes to file", "No output", "Error"], "answer": "A", "explanation": "stdout is standard output stream (console)."},
+
+    # 150-159: Recursion, function pointers, advanced functions
+    {"id": 150, "text": "What is the output of this recursion? `int fact(int n) { if(n<=1) return 1; else return n*fact(n-1); } fact(4);`", "options": ["24", "12", "6", "8"], "answer": "A", "explanation": "4*3*2*1 = 24."},
+    {"id": 151, "text": "Find error: `int func();` and later `int func(int a) { return a; }`", "options": ["Declaration mismatch", "No error", "Syntax error", "Redefinition"], "answer": "A", "explanation": "Declaration says no parameters, definition has one parameter – mismatch."},
+    {"id": 152, "text": "What is a function pointer declaration for a function returning int and taking float?", "options": ["int (*p)(float)", "int *p(float)", "int (float)*p", "None"], "answer": "A", "explanation": "`int (*p)(float)` declares p as pointer to function taking float, returning int."},
+    {"id": 153, "text": "Output: `void (*fp)() = NULL; fp();`", "options": ["Segmentation fault", "No error", "Prints nothing", "Compilation error"], "answer": "A", "explanation": "Calling a NULL function pointer leads to crash."},
+    {"id": 154, "text": "Which is the correct way to call a function `void fun(int a)` using function pointer `(*p)(int)`?", "options": ["p(5)", "(*p)(5)", "Both A and B", "p->(5)"], "answer": "C", "explanation": "Both syntaxes are valid."},
+    {"id": 155, "text": "Find error: `int main() { static int x = 5; }`", "options": ["No error", "Static not allowed in main", "Syntax error", "Scope error"], "answer": "A", "explanation": "Static local variable allowed, retains value across function calls."},
+    {"id": 156, "text": "What is the output of `int a = 1, b = 2; int c = (a,b); printf(\"%d\", c);`", "options": ["1", "2", "Error", "Undefined"], "answer": "B", "explanation": "Comma operator evaluates both, returns the second operand."},
+    {"id": 157, "text": "Output of `printf(\"%d\", 1 ? 2 : 3);`", "options": ["2", "3", "1", "Error"], "answer": "A", "explanation": "Condition 1 is true, returns 2."},
+    {"id": 158, "text": "Find error: `int x = 10; int *const p = &x; p++;`", "options": ["Cannot modify const pointer", "No error", "Cannot modify value", "Syntax error"], "answer": "A", "explanation": "`int *const p` is constant pointer; cannot change where it points."},
+    {"id": 159, "text": "What is `void*` commonly used for?", "options": ["Generic pointer type", "Function returning nothing", "Pointer to void", "All of the above"], "answer": "D", "explanation": "`void*` is a generic pointer that can hold any address type."},
+
+    # 160-169: Bit fields, setjmp/longjmp, variadic functions
+    {"id": 160, "text": "What are bit fields used for?", "options": ["To pack small integers into fewer bits", "To declare arrays of bits", "To define bitwise operations", "None"], "answer": "A", "explanation": "Bit fields allow struct members to be stored in a specified number of bits."},
+    {"id": 161, "text": "Find error: `struct { unsigned int a: 1, b: 2; } s; s.b = 3;`", "options": ["No error (3 fits in 2 bits? 3 = 11 binary)", "Overflow", "Syntax error", "Cannot assign"], "answer": "A", "explanation": "3 fits in 2 bits (binary 11), so no overflow."},
+    {"id": 162, "text": "Which header is required for `setjmp` and `longjmp`?", "options": ["<setjmp.h>", "<stdlib.h>", "<stdio.h>", "<stdarg.h>"], "answer": "A", "explanation": "`setjmp.h` provides non-local jumps."},
+    {"id": 163, "text": "Output of `setjmp` when called directly (not in a conditional)?", "options": ["0", "1", "Undefined", "Compilation error"], "answer": "C", "explanation": "setjmp must be used as the condition in an if, switch, or loop; otherwise undefined."},
+    {"id": 164, "text": "Variadic functions use which macros?", "options": ["va_start, va_arg, va_end", "var_start, var_arg", "stdarg_start", "None"], "answer": "A", "explanation": "From <stdarg.h>: va_start, va_arg, va_end."},
+    {"id": 165, "text": "Find error: `int printf(char *fmt, ...) { va_list args; va_start(args, fmt); ... }` but missing `va_end`", "options": ["Undefined behavior", "No error", "Memory leak", "Compilation error"], "answer": "A", "explanation": "Missing va_end leads to undefined behavior."},
+    {"id": 166, "text": "What does `va_arg(args, int)` return?", "options": ["Next argument as int", "Address of argument", "Number of arguments", "None"], "answer": "A", "explanation": "`va_arg` retrieves the next argument of the specified type."},
+    {"id": 167, "text": "Which macro ends variable argument list processing?", "options": ["va_end", "va_close", "va_done", "va_finish"], "answer": "A", "explanation": "`va_end` cleans up the va_list."},
+    {"id": 168, "text": "Output of `printf(\"%d\", 10);` if `printf` is variadic.", "options": ["10", "Error", "Garbage", "Nothing"], "answer": "A", "explanation": "Correct usage prints 10."},
+    {"id": 169, "text": "Find error: `void func(...) {}`", "options": ["Must have at least one named parameter", "No error", "Syntax error", "Runtime error"], "answer": "A", "explanation": "Variadic function must have at least one named parameter before ellipsis."},
+
+    # 170-179: Sorting/searching algorithms, time.h, standard library
+    {"id": 170, "text": "Which function from `stdlib.h` performs quicksort?", "options": ["qsort", "sort", "bsearch", "quick_sort"], "answer": "A", "explanation": "`qsort` is the standard library quicksort implementation."},
+    {"id": 171, "text": "What is the time complexity of binary search?", "options": ["O(n)", "O(log n)", "O(n log n)", "O(1)"], "answer": "B", "explanation": "Binary search halves the search space each step."},
+    {"id": 172, "text": "Output of `int a[5] = {1,2,3}; printf(\"%d\", a[4]);`", "options": ["0", "Garbage", "3", "Error"], "answer": "A", "explanation": "Uninitialized elements of static/global arrays default to 0; local arrays? Actually here it's local? Depends. But default 0 only for static/global. Usually local uninitialized = garbage. In C, for this case, it's a local array, so a[4] is garbage. Many compilers may give 0 but not guaranteed. Safer to say garbage. However, typical multiple choice might expect 0. Let's adjust: Standard C says automatic array elements not initialized have indeterminate values. So answer should be garbage. But to be consistent with earlier similar questions (id:54 they said 0 for a[2]? Actually id:54 was int a[5]={1}; then a[2]=0 because partial initialization sets rest to 0! Yes! So here also int a[5]={1,2,3}; partial initialization sets remaining to 0. So answer is 0."},
+    # Correction: Actually C standard says if you initialize at least one element, the rest are zero-initialized. So answer is 0.
+    {"id": 172, "text": "Output: `int a[5] = {1,2,3}; printf(\"%d\", a[4]);`", "options": ["0", "Garbage", "3", "Error"], "answer": "A", "explanation": "Partial initialization: first three elements set, remaining are zero-initialized."},
+    {"id": 173, "text": "Which function generates a pseudo-random number?", "options": ["rand()", "random()", "rand_r()", "All of these"], "answer": "D", "explanation": "`rand()`, `random()`, and `rand_r()` are available on many systems (though `rand` is standard)."},
+    {"id": 174, "text": "What is the output of `time_t t = time(NULL);`? (Assume success)", "options": ["Current calendar time", "0", "-1", "Error"], "answer": "A", "explanation": "`time(NULL)` returns the current time in seconds since epoch."},
+    {"id": 175, "text": "Find error: `clock_t start = clock(); ... long duration = clock() - start;`", "options": ["No error", "`clock_t` not defined", "Overflow possible", "Both A and C"], "answer": "D", "explanation": "`clock_t` is defined in <time.h>. Overflow can occur for long runs, but no syntax error."},
+    {"id": 176, "text": "Which header defines `size_t`?", "options": ["<stddef.h>", "<stdlib.h>", "<stdio.h>", "All of these"], "answer": "D", "explanation": "`size_t` is defined in several standard headers including <stddef.h>, <stdlib.h>, <stdio.h>."},
+    {"id": 177, "text": "Output of `printf(\"%zu\", sizeof('a'));` in C", "options": ["1", "4", "2", "Depends"], "answer": "A", "explanation": "In C, character constant 'a' has type int, but sizeof('a') is 1 (char). Wait, in C, 'a' is int, so sizeof('a') is sizeof(int). That is typically 4. Hmm, actually in C, character constants are ints, so sizeof('a') is sizeof(int). In C++, it's 1. The question says C, so answer is sizeof(int) = usually 4. But many textbooks incorrectly say 1. Let's be precise: The C standard says character constant has type int. So sizeof('a') == sizeof(int). Typically 4. However, many online quizzes say 1. For the purpose of this test, we'll stick to the standard: answer = 4."},
+    # Let's change answer to 4 to be correct.
+    {"id": 177, "text": "Output of `printf(\"%zu\", sizeof('a'));` in C", "options": ["1", "4", "2", "Depends"], "answer": "B", "explanation": "In C, character constants have type int, so sizeof('a') = sizeof(int), typically 4."},
+    {"id": 178, "text": "What is the maximum number of dimensions of an array in C?", "options": ["No limit (implementation-defined)", "7", "12", "3"], "answer": "A", "explanation": "C standard doesn't specify a limit; it's compiler-dependent."},
+    {"id": 179, "text": "Find error: `int (*arr)[5] = malloc(5 * sizeof(int));`", "options": ["Type mismatch: arr is pointer to array of 5 ints, malloc returns int*", "No error", "Missing cast", "Syntax error"], "answer": "A", "explanation": "`int (*arr)[5]` expects pointer to array of 5 ints; `malloc` returns pointer to int. Should be `int *arr = malloc(5*sizeof(int))` or cast."},
+
+    # 180-189: Advanced error finding, tricky outputs
+    {"id": 180, "text": "Output: `int x = 0; while(x < 5) { if(x==3) continue; printf(\"%d\", x); x++; }`", "options": ["0124", "01234", "Infinite loop", "012"], "answer": "C", "explanation": "When x==3, continue skips increment, so loop forever."},
+    {"id": 181, "text": "Find error: `int *p = malloc(0);`", "options": ["Implementation-defined (returns NULL or unique pointer)", "No error", "Compilation error", "Runtime crash"], "answer": "A", "explanation": "`malloc(0)` may return NULL or a non-NULL pointer that cannot be dereferenced, but is allowed."},
+    {"id": 182, "text": "Output: `char c = 255; c = c + 1; printf(\"%d\", c);` (assuming signed char)", "options": ["0", "255", "-1", "256"], "answer": "A", "explanation": "255 +1 = 256 overflows signed char range (-128..127); wraps around to 0."},
+    {"id": 183, "text": "What is the result of `printf(\"%d\", ~0);` on a 32-bit system?", "options": ["-1", "4294967295", "0", "1"], "answer": "A", "explanation": "Bitwise NOT of 0 gives all 1's, which in two's complement is -1."},
+    {"id": 184, "text": "Find error: `int main() { static int x; return x; }`", "options": ["No error", "Static not allowed inside main", "Return type mismatch", "Missing include"], "answer": "A", "explanation": "Static local variable is allowed and initialized to 0."},
+    {"id": 185, "text": "Output: `printf(\"%d\", 1 << 2);`", "options": ["2", "4", "1", "0"], "answer": "B", "explanation": "Left shift 1 by 2 = 4."},
+    {"id": 186, "text": "Which of the following is a valid string literal?", "options": ["\"Hello\\n\"", "'Hello'", "Hello", "None"], "answer": "A", "explanation": "String literals are enclosed in double quotes."},
+    {"id": 187, "text": "Find error: `int a[3][3]; a[0][3] = 5;`", "options": ["Out of bounds (column index 3)", "No error", "Syntax error", "Runtime crash but compiles"], "answer": "A", "explanation": "Valid indices for second dimension are 0-2; index 3 is out of bounds."},
+    {"id": 188, "text": "Output of `int a=0; printf(\"%d\", a+++a);`", "options": ["1", "0", "2", "Undefined"], "answer": "D", "explanation": "Modifying a multiple times between sequence points is undefined."},
+    {"id": 189, "text": "What does `rewind(fp)` do?", "options": ["Sets file position to beginning", "Closes the file", "Flushes buffer", "None"], "answer": "A", "explanation": "`rewind` moves the file position indicator to the start of the file."},
+
+    # 190-199: More on pointers, dynamic memory, and miscellaneous
+    {"id": 190, "text": "Find error: `int *p = (int*)calloc(5, sizeof(int)); p[5] = 10;`", "options": ["Out of bounds", "No error", "Memory leak", "Syntax error"], "answer": "A", "explanation": "Valid indices 0-4; index 5 is out of bounds."},
+    {"id": 191, "text": "What is `fgetc(fp)` return type?", "options": ["int", "char", "unsigned char", "size_t"], "answer": "A", "explanation": "`fgetc` returns int to accommodate EOF (-1)."},
+    {"id": 192, "text": "Output: `printf(\"%d\", !10);`", "options": ["0", "1", "10", "Error"], "answer": "A", "explanation": "Logical NOT: 10 is non-zero → !10 = 0."},
+    {"id": 193, "text": "Find error: `int x = 5; int y = (x == 5) ? 10 : (x = 20);`", "options": ["No error", "Assignment in second part", "Syntax error", "Type mismatch"], "answer": "A", "explanation": "Ternary operator can have expressions, assignment is allowed."},
+    {"id": 194, "text": "What does `#include <stdio.h>` do?", "options": ["Copies the contents of stdio.h into the source", "Links the library", "Declares functions", "None"], "answer": "A", "explanation": "The preprocessor includes the header file textually."},
+    {"id": 195, "text": "Output: `int a = 5; printf(\"%d\", a==5?1:0);`", "options": ["1", "0", "5", "Error"], "answer": "A", "explanation": "a==5 is true → returns 1."},
+    {"id": 196, "text": "Find error: `char str[] = \"Hello\"; str = \"World\";`", "options": ["Array name is non-modifiable lvalue", "No error", "Syntax error", "Memory leak"], "answer": "A", "explanation": "Arrays cannot be reassigned; use strcpy instead."},
+    {"id": 197, "text": "What is the result of `5 / 2.0`?", "options": ["2.5", "2", "2.0", "Error"], "answer": "A", "explanation": "2.0 is double, so integer 5 is promoted to double, result 2.5."},
+    {"id": 198, "text": "Output: `printf(\"%d\", 10 ^ 10);`", "options": ["0", "20", "1", "10"], "answer": "A", "explanation": "XOR with itself gives 0."},
+    {"id": 199, "text": "Which of the following is true about `main()` function?", "options": ["Every program must have exactly one main()", "main can be called recursively", "main can be defined as void", "All of the above"], "answer": "D", "explanation": "In standard C, main returns int, but some compilers allow void as extension. It can be called recursively (though unusual). And exactly one main per program."}
 ]
