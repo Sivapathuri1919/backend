@@ -100,3 +100,4 @@ QUESTIONS = [
     {"id": 97, "text": "Output of binary search for 7 in sorted array [2,5,7,9]?", "options": ["Found at index 2", "Not found", "Found at index 3", "Error"], "answer": "A", "explanation": "Binary search finds 7 at index 2 (0‑based)."},
     {"id": 98, "text": "Find error: `int a[5] = {1,2,3,4,5}; for(i=0;i<=5;i++) printf(\"%d\",a[i]);`", "options": ["Out‑of‑bounds access", "No error", "Wrong loop condition", "Syntax error"], "answer": "A", "explanation": "When i=5, a[5] is out of bounds (valid 0-4)."},
     {"id": 99, "text": "What does `#ifndef HEADER_H` guard against?", "options": ["Double inclusion", "Compilation error", "Macro redefinition", "None"], "answer": "A", "explanation": "Include guards prevent a header from being included multiple times."},
+]
