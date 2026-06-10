@@ -1,103 +1,708 @@
 QUESTIONS = [
-    # ========== ORIGINAL 100 QUESTIONS (IDs 0-99) ==========
-    {"id": 0, "text": "Which of the following is a valid C variable name?", "options": ["1num", "int", "num_1", "float"], "answer": "C", "explanation": "Variable names cannot start with a digit; 'int' and 'float' are keywords. 'num_1' starts with a letter and contains underscore – valid."},
-    {"id": 1, "text": "What is the size of `short int` on a typical 32-bit compiler?", "options": ["1 byte", "2 bytes", "4 bytes", "8 bytes"], "answer": "B", "explanation": "On most platforms, `short` is 2 bytes (16 bits)."},
-    {"id": 2, "text": "Which format specifier is used for `long long`?", "options": ["%lld", "%ld", "%l", "%d"], "answer": "A", "explanation": "`%lld` is the correct specifier for `long long` in `printf`/`scanf`."},
-    {"id": 3, "text": "Output: `printf(\"%zu\", sizeof(short));`", "options": ["1", "2", "4", "Depends"], "answer": "B", "explanation": "`sizeof(short)` returns 2 on most systems; `%zu` prints size_t value."},
-    {"id": 4, "text": "Find the error: `unsigned int x = -5;`", "options": ["No error, x becomes large positive", "Syntax error", "Runtime error", "Undefined behavior"], "answer": "A", "explanation": "Unsigned integers wrap around; -5 becomes UINT_MAX-4, no compilation error."},
-    {"id": 5, "text": "What does `enum color {RED, GREEN, BLUE};` assign to `GREEN`?", "options": ["0", "1", "2", "Random"], "answer": "B", "explanation": "By default, first enumerator = 0, then each subsequent = previous + 1. So GREEN = 1."},
-    {"id": 6, "text": "Which keyword is used to create a union?", "options": ["union", "struct", "typedef", "enum"], "answer": "A", "explanation": "`union` defines a union where all members share the same memory location."},
-    {"id": 7, "text": "Output: `union U { int a; char b; } u; u.a = 65; printf(\"%c\", u.b);` (ASCII 65 = 'A')", "options": ["A", "65", "Garbage", "Error"], "answer": "A", "explanation": "Union members overlap; writing to `a` writes to same memory as `b`, so `b` holds the low-order byte of 65 → 'A'."},
-    {"id": 8, "text": "Find error: `enum week {MON, TUE}; enum week day = 5;`", "options": ["No error", "Enum constant out of range", "Cannot assign int", "Syntax error"], "answer": "C", "explanation": "In C, an enum variable can only be assigned the enum constants, not arbitrary integers (unless cast)."},
-    {"id": 9, "text": "Which modifier extends the range of an integer variable?", "options": ["short", "unsigned", "long", "Both B and C"], "answer": "D", "explanation": "`unsigned` removes sign (doubles positive range), `long` increases size – both extend range."},
-    {"id": 10, "text": "Output of `printf(\"%d\", 10 > 5 ? 1 : 0);`", "options": ["0", "1", "True", "False"], "answer": "B", "explanation": "Ternary operator: condition true → returns 1, false → 0."},
-    {"id": 11, "text": "What is the value of `5 + 3 * 2`?", "options": ["16", "11", "13", "10"], "answer": "B", "explanation": "Multiplication has higher precedence: 3*2=6, then 5+6=11."},
-    {"id": 12, "text": "Find error: `int a = 10, b = 0; int c = a / b;`", "options": ["Compile error", "Runtime error (division by zero)", "No error, c = 0", "Undefined"], "answer": "B", "explanation": "Division by zero causes runtime error (undefined behavior, usually crash)."},
-    {"id": 13, "text": "Output: `int x = 5; printf(\"%d\", x++ + ++x);`", "options": ["11", "12", "13", "Undefined"], "answer": "B", "explanation": "x++ uses 5 then increments to 6; ++x increments 6 to 7, then uses 7; 5+7=12. However, behavior is undefined in C – but compilers often give 12."},
-    {"id": 14, "text": "Which operator has the highest precedence?", "options": ["+", "==", "&&", "()"], "answer": "D", "explanation": "Parentheses `()` have highest precedence, used to override normal order."},
-    {"id": 15, "text": "What is implicit type conversion?", "options": ["Automatic conversion by compiler", "Manual cast", "Both", "None"], "answer": "A", "explanation": "Implicit conversion happens automatically (e.g., int to float in expression)."},
-    {"id": 16, "text": "Output: `double x = 5/2; printf(\"%f\", x);`", "options": ["2.500000", "2.000000", "2.0", "Error"], "answer": "B", "explanation": "Integer division 5/2 = 2, then promoted to double → 2.000000."},
-    {"id": 17, "text": "Find error: `float a = 5.5; int b = (int)a;`", "options": ["No error", "Syntax error", "Loss of data warning", "Runtime error"], "answer": "A", "explanation": "Explicit cast (int) is allowed; truncates fractional part, but no error."},
-    {"id": 18, "text": "What does `%` operator do?", "options": ["Division", "Modulus", "Percentage", "Bitwise AND"], "answer": "B", "explanation": "`%` is the modulus operator (remainder after integer division)."},
-    {"id": 19, "text": "Output: `int a=5, b=3; printf(\"%d\", a & b);`", "options": ["1", "2", "5", "7"], "answer": "A", "explanation": "5 (101) & 3 (011) = 001 binary = 1."},
-    {"id": 20, "text": "Output: `int x=2; if(x=0) printf(\"Hi\"); else printf(\"Bye\");`", "options": ["Hi", "Bye", "Nothing", "Error"], "answer": "B", "explanation": "Assignment `x=0` returns 0 (false), so else part executes → \"Bye\"."},
-    {"id": 21, "text": "Which is valid as switch-case expression type?", "options": ["float", "double", "char", "string"], "answer": "C", "explanation": "Switch expression must be integral type (char, int, enum); float/double not allowed."},
-    {"id": 22, "text": "Find error: `switch(x) { case 1: printf(\"one\"); case 2: break; }`", "options": ["Missing default", "No error", "Duplicate case", "break missing"], "answer": "B", "explanation": "No error; missing default is allowed, case 1 falls through to case 2."},
-    {"id": 23, "text": "Output of nested if: `int a=5; if(a>5) printf(\"A\"); else if(a==5) printf(\"B\"); else printf(\"C\");`", "options": ["A", "B", "C", "None"], "answer": "B", "explanation": "a==5 is true, so prints \"B\"."},
-    {"id": 24, "text": "What happens if `break` is omitted in a `case`?", "options": ["Fall‑through to next case", "Compilation error", "Loop becomes infinite", "Program crashes"], "answer": "A", "explanation": "Control \"falls through\" to the next case statement unless a break is encountered."},
-    {"id": 25, "text": "Which statement is used to exit a switch?", "options": ["continue", "exit", "break", "return"], "answer": "C", "explanation": "`break` exits the switch block. `return` exits the function."},
-    {"id": 26, "text": "Output: `int x=1; switch(x) { case 1: printf(\"1\"); case 2: printf(\"2\"); }`", "options": ["1", "2", "12", "No output"], "answer": "C", "explanation": "Fall-through: case 1 executes, then case 2 executes → prints \"12\"."},
-    {"id": 27, "text": "Find error: `switch(x) { case 1+2: printf(\"3\"); }`", "options": ["Expression not allowed", "No error", "Only constants allowed", "Both B and C"], "answer": "B", "explanation": "1+2 is a constant expression, allowed as case label."},
-    {"id": 28, "text": "Can we use `switch` with `enum` variables?", "options": ["Yes", "No", "Only integers", "Depends on compiler"], "answer": "A", "explanation": "Enums are integral types, so they are valid in switch."},
-    {"id": 29, "text": "Output: `int x=3; if(x=5) printf(\"Hello\"); else printf(\"World\");`", "options": ["Hello", "World", "Error", "Nothing"], "answer": "A", "explanation": "Assignment x=5 returns 5 (non‑zero → true), so \"Hello\" prints."},
-    {"id": 30, "text": "How many times does `for(i=0;i<5;i++)` execute the loop body?", "options": ["4", "5", "6", "Infinite"], "answer": "B", "explanation": "i = 0,1,2,3,4 → five iterations."},
-    {"id": 31, "text": "Output: `int i=0; while(i<3){ printf(\"%d\",i); i++; }`", "options": ["012", "123", "0 1 2", "0123"], "answer": "A", "explanation": "Prints i then increments: 0,1,2 concatenated → \"012\"."},
-    {"id": 32, "text": "Find error: `do{ }while(0);`", "options": ["Missing semicolon", "Infinite loop", "No error", "Condition false"], "answer": "C", "explanation": "do-while with condition 0 executes once (semicolon is correct)."},
-    {"id": 33, "text": "Which loop guarantees at least one execution?", "options": ["for", "while", "do-while", "none"], "answer": "C", "explanation": "do-while checks condition after the body, so body runs at least once."},
-    {"id": 34, "text": "Output: `for(i=0;i<2;i++) for(j=0;j<2;j++) printf(\"%d\",i*j);`", "options": ["0001", "0011", "0000", "0101"], "answer": "A", "explanation": "i*j values: i=0: 0,0; i=1: 0,1 → concatenated \"0001\"."},
-    {"id": 35, "text": "What does `break` do inside a loop?", "options": ["Exits the loop", "Skips one iteration", "Continues next iteration", "Stops program"], "answer": "A", "explanation": "`break` terminates the innermost loop or switch."},
-    {"id": 36, "text": "`for(;;)` creates an infinite loop.", "options": ["True", "False", "Syntax error", "Depends"], "answer": "A", "explanation": "No initialization, condition, or increment; condition defaults to non‑zero → infinite."},
-    {"id": 37, "text": "Output: `int x=1; while(x<1){ printf(\"%d\",x); x++; }`", "options": ["1", "No output", "Infinite", "Error"], "answer": "B", "explanation": "Condition false initially, so loop body never executes."},
-    {"id": 38, "text": "Find error: `for(int i=0;i<5;i++){ int i=10; }`", "options": ["Redefinition", "No error", "Scope issue", "Syntax error"], "answer": "A", "explanation": "Inner `i` shadows outer `i` but is allowed in C99; however redefinition in same scope is error – here different block? Actually allowed but confusing. Most compilers warn."},
-    {"id": 39, "text": "What does `continue` do?", "options": ["Skips rest of iteration", "Exits loop", "Jumps to next loop", "Both A and C"], "answer": "A", "explanation": "`continue` skips remaining statements in current iteration and moves to next iteration."},
-    {"id": 40, "text": "Which is a correct function prototype?", "options": ["int func();", "func();", "int func", "func(int a);"], "answer": "A", "explanation": "`int func();` is a valid prototype (return type int, no parameters)."},
-    {"id": 41, "text": "Output: `void fun(int a){ a=10; } main(){ int x=5; fun(x); printf(\"%d\",x); }`", "options": ["5", "10", "Garbage", "Error"], "answer": "A", "explanation": "Pass by value – changes to parameter `a` do not affect `x`."},
-    {"id": 42, "text": "What is recursion?", "options": ["Function calling itself", "Loop", "Nested function", "Inline function"], "answer": "A", "explanation": "Recursion occurs when a function calls itself directly or indirectly."},
-    {"id": 43, "text": "Find error: `int add(int a, int b) { return a+b; } main() { add(5); }`", "options": ["Missing argument", "No error", "Return type mismatch", "Not declared"], "answer": "A", "explanation": "Function expects two arguments, only one provided → compilation error."},
-    {"id": 44, "text": "Default return type of `main()`?", "options": ["void", "int", "float", "char"], "answer": "B", "explanation": "Standard C specifies `int main(void)` or `int main(int argc, char *argv[])`."},
-    {"id": 45, "text": "Output: `int fun(){ static int x=0; x++; return x; } main(){ printf(\"%d\",fun()+fun()); }`", "options": ["1", "2", "3", "Undefined"], "answer": "C", "explanation": "Static variable retains value: first call returns 1, second returns 2 → sum 3."},
-    {"id": 46, "text": "Which header handles variable arguments?", "options": ["stdarg.h", "varargs.h", "Both", "None"], "answer": "A", "explanation": "`stdarg.h` provides macros (va_list, va_start, etc.) for variable arguments."},
-    {"id": 47, "text": "Inline function is expanded at?", "options": ["Compile time", "Run time", "Link time", "Never"], "answer": "A", "explanation": "Inline functions are expanded at compile time to avoid function call overhead."},
-    {"id": 48, "text": "Find error: `void swap(int *a, int *b){ int t=*a; *a=*b; *b=t; } main(){ int x=5,y=10; swap(x,y); }`", "options": ["Passing int instead of pointer", "No error", "Swap fails", "Syntax error"], "answer": "A", "explanation": "Function expects pointers, but integers are passed; should be `swap(&x,&y)`."},
-    {"id": 49, "text": "Does C support function overloading?", "options": ["No", "Yes, by return type", "Yes, by arguments", "Only in C99"], "answer": "A", "explanation": "C does not support function overloading; each function name must be unique."},
-    {"id": 50, "text": "Correct array declaration:", "options": ["int arr[5];", "int 5arr;", "arr[5] int;", "int arr[];"], "answer": "A", "explanation": "`int arr[5];` declares an array of 5 integers."},
-    {"id": 51, "text": "Output: `int arr[3]={1,2,3}; printf(\"%d\",arr[3]);`", "options": ["0", "Garbage", "3", "Error"], "answer": "B", "explanation": "Index 3 is out of bounds (valid indices 0-2); prints garbage value."},
-    {"id": 52, "text": "Find error: `int n=5; int arr[n];`", "options": ["VLA not allowed in C89", "No error in C99", "Both A and B", "Syntax error"], "answer": "C", "explanation": "Variable-length arrays (VLA) are valid in C99 but not in C89."},
-    {"id": 53, "text": "Base address of array is given by?", "options": ["arr", "&arr[0]", "Both", "None"], "answer": "C", "explanation": "Array name `arr` decays to pointer to first element, same as `&arr[0]`."},
-    {"id": 54, "text": "Output: `int a[5]={1}; printf(\"%d\",a[2]);`", "options": ["1", "0", "Garbage", "Error"], "answer": "B", "explanation": "Partial initialization sets first element to 1, rest to 0."},
-    {"id": 55, "text": "How to access element at row 1, column 2 of a 2D array `mat`?", "options": ["mat[1][2]", "mat(1,2)", "mat[2][1]", "mat[1,2]"], "answer": "A", "explanation": "2D array indexing: `mat[row][col]`."},
-    {"id": 56, "text": "What is the worst‑case complexity of bubble sort?", "options": ["O(n)", "O(n log n)", "O(n²)", "O(1)"], "answer": "C", "explanation": "Bubble sort worst-case (reverse order) requires n² comparisons."},
-    {"id": 57, "text": "Output of linear search for `5` in `[2,4,5,7]`?", "options": ["Found at index 2", "Found at index 1", "Not found", "Error"], "answer": "A", "explanation": "Indexing from 0, element 5 is at position 2."},
-    {"id": 58, "text": "Find error: `int arr[] = {1,2,3}; arr = {4,5,6};`", "options": ["Array cannot be reassigned", "No error", "Syntax error", "Memory leak"], "answer": "A", "explanation": "Array name is a constant pointer; cannot be assigned a new array."},
-    {"id": 59, "text": "Which sorting algorithm repeatedly swaps adjacent elements?", "options": ["Selection sort", "Bubble sort", "Insertion sort", "Merge sort"], "answer": "B", "explanation": "Bubble sort compares and swaps adjacent elements if out of order."},
-    {"id": 60, "text": "Which function copies a string?", "options": ["strcpy", "strcat", "strcmp", "strlen"], "answer": "A", "explanation": "`strcpy(dest, src)` copies string from src to dest."},
-    {"id": 61, "text": "Output: `char s[10]=\"Hello\"; printf(\"%lu\", strlen(s));`", "options": ["10", "5", "6", "Error"], "answer": "B", "explanation": "`strlen` counts characters until null terminator; \"Hello\" has 5."},
-    {"id": 62, "text": "Find error: `char *p = \"Hi\"; p[0] = 'h';`", "options": ["Modifying string literal", "No error", "Memory leak", "Syntax error"], "answer": "A", "explanation": "String literals are read-only; attempting to modify causes undefined behavior (often crash)."},
-    {"id": 63, "text": "What does `strcmp(\"abc\",\"abd\")` return?", "options": ["0", "Positive", "Negative", "1"], "answer": "C", "explanation": "`strcmp` returns negative if first string < second; 'c' < 'd' → negative."},
-    {"id": 64, "text": "Output: `char s[20]=\"Hello\"; strcat(s,\" World\"); printf(\"%s\",s);`", "options": ["Hello World", "HelloWorld", "Hello", "Error"], "answer": "A", "explanation": "`strcat` appends \" World\" to the end of s."},
-    {"id": 65, "text": "Which header is required for string functions?", "options": ["<string.h>", "<strings.h>", "<cstring>", "<strlib.h>"], "answer": "A", "explanation": "Standard C string functions are declared in `<string.h>`."},
-    {"id": 66, "text": "Find error: `char s[5]=\"Hello\";`", "options": ["No space for null terminator", "No error", "Syntax error", "Runtime error"], "answer": "A", "explanation": "\"Hello\" requires 6 bytes (5 chars + '\\0'); array of 5 is too small."},
-    {"id": 67, "text": "Output: `printf(\"%c\", \"abc\"[1]);`", "options": ["a", "b", "c", "Error"], "answer": "B", "explanation": "String literal is array of chars; index 1 gives 'b'."},
-    {"id": 68, "text": "What does `strlen` return for empty string?", "options": ["0", "1", "NULL", "Undefined"], "answer": "A", "explanation": "Empty string has only null terminator, so length 0."},
-    {"id": 69, "text": "Which function compares two strings?", "options": ["strcmp", "strcpy", "strcat", "strlen"], "answer": "A", "explanation": "`strcmp(s1, s2)` returns 0 if equal, else non-zero."},
-    {"id": 70, "text": "What does `int *ptr;` declare?", "options": ["Pointer to int", "Integer variable", "Array", "Function"], "answer": "A", "explanation": "`int *ptr` declares a variable that holds the address of an integer."},
-    {"id": 71, "text": "Output: `int a=10, *p=&a; printf(\"%d\", *p);`", "options": ["10", "Address of a", "Garbage", "Error"], "answer": "A", "explanation": "`*p` dereferences the pointer, giving the value of a."},
-    {"id": 72, "text": "Find error: `int *p; *p=5;`", "options": ["Dangling pointer", "No error", "Syntax error", "Memory leak"], "answer": "A", "explanation": "p is uninitialized; dereferencing it leads to undefined behavior."},
-    {"id": 73, "text": "Pointer arithmetic: `int arr[5]; int *p = arr; p++;` How many bytes moved?", "options": ["1", "2", "4", "Depends on int size"], "answer": "D", "explanation": "`p++` moves by `sizeof(int)` bytes; typically 4 on 32-bit systems."},
-    {"id": 74, "text": "Output: `int arr[]={10,20,30}; int *p=arr; printf(\"%d\", *(p+1));`", "options": ["10", "20", "30", "Address"], "answer": "B", "explanation": "p points to arr[0]; p+1 points to arr[1]; dereference gives 20."},
-    {"id": 75, "text": "Which is equivalent to `arr[i]`?", "options": ["*(arr+i)", "*arr+i", "&arr[i]", "arr+i"], "answer": "A", "explanation": "Array subscripting `arr[i]` is equivalent to `*(arr + i)`."},
-    {"id": 76, "text": "Find error: `int *p = NULL; printf(\"%d\", *p);`", "options": ["Segmentation fault", "No error", "Prints 0", "Syntax error"], "answer": "A", "explanation": "Dereferencing NULL pointer causes segmentation fault."},
-    {"id": 77, "text": "What does `void *` represent?", "options": ["Generic pointer", "Pointer to void", "No value", "Both A and B"], "answer": "D", "explanation": "`void *` is a generic pointer that can hold any address type."},
-    {"id": 78, "text": "Output: `int x=5, y=10; int *p=&x, *q=&y; printf(\"%d\", p==q);`", "options": ["0", "1", "Address", "Error"], "answer": "A", "explanation": "p and q point to different variables, so their addresses are not equal → 0."},
-    {"id": 79, "text": "Pointer to an array of 5 integers is declared as?", "options": ["int (*p)[5];", "int *p[5];", "int *p;", "int arr[5];"], "answer": "A", "explanation": "`int (*p)[5]` declares p as pointer to array of 5 ints. `int *p[5]` is array of 5 pointers."},
-    {"id": 80, "text": "How to access member `age` of structure variable `student`?", "options": ["student.age", "student->age", "age.student", "&student.age"], "answer": "A", "explanation": "Dot operator (.) is used to access members of structure variable."},
-    {"id": 81, "text": "Output: `struct S { int a; } s = {5}; printf(\"%d\", s.a);`", "options": ["5", "Garbage", "Error", "Address"], "answer": "A", "explanation": "Structure member `a` is initialized to 5 and printed."},
-    {"id": 82, "text": "Find error: `struct T { int x; } obj; obj.x = 10; struct T obj2 = obj;`", "options": ["No error", "Cannot copy structures", "Missing semicolon", "Memory leak"], "answer": "A", "explanation": "Structures can be assigned directly (copy). No error."},
-    {"id": 83, "text": "Which operator is used to access members via pointer to structure?", "options": [".", "->", "&", "*"], "answer": "B", "explanation": "Arrow operator `->` is shorthand for `(*ptr).member`."},
-    {"id": 84, "text": "Output: `struct { int i; } *p; p = malloc(sizeof(*p)); p->i = 99; printf(\"%d\", p->i);` (assume malloc succeeds)", "options": ["99", "0", "Garbage", "Error"], "answer": "A", "explanation": "Dynamic allocation succeeds; `p->i` stores 99 and prints it."},
-    {"id": 85, "text": "Which function allocates memory on heap?", "options": ["malloc()", "alloc()", "memalloc()", "calloc()"], "answer": "A", "explanation": "`malloc()` allocates memory on heap. `calloc()` also does, but both are correct. Single answer: `malloc`."},
-    {"id": 86, "text": "Find error: `int *p = malloc(10 * sizeof(int)); free(p); free(p);`", "options": ["Double free", "No error", "Memory leak", "Syntax error"], "answer": "A", "explanation": "Freeing already freed memory is undefined behavior (double free)."},
-    {"id": 87, "text": "What does `calloc(5, sizeof(int))` do?", "options": ["Allocates 5 ints, initialises to 0", "Allocates 5 ints, uninitialised", "Allocates 5 bytes", "Allocates 5 arrays"], "answer": "A", "explanation": "`calloc` allocates and zero-initializes memory."},
-    {"id": 88, "text": "Output: `int *p = malloc(sizeof(int)); *p = 7; free(p); printf(\"%d\", *p);`", "options": ["7", "0", "Undefined", "Compile error"], "answer": "C", "explanation": "After `free`, pointer is dangling; dereferencing causes undefined behavior."},
-    {"id": 89, "text": "Which header is required for dynamic memory?", "options": ["<stdlib.h>", "<malloc.h>", "<memory.h>", "<alloc.h>"], "answer": "A", "explanation": "`malloc`, `free`, etc. are declared in `<stdlib.h>` (also `<malloc.h>` but non-standard). Standard is `<stdlib.h>`."},
-    {"id": 90, "text": "Which mode opens a file for reading?", "options": ["r", "w", "a", "rb"], "answer": "A", "explanation": "`\"r\"` opens an existing text file for reading."},
-    {"id": 91, "text": "Output: `FILE *fp = fopen(\"test.txt\",\"w\"); fprintf(fp,\"Hello\"); fclose(fp);` What happens?", "options": ["Writes Hello to file", "Creates file if not exists", "Both A and B", "Error"], "answer": "C", "explanation": "`\"w\"` creates file (or truncates) and writes \"Hello\"."},
-    {"id": 92, "text": "Find error: `fopen(\"data.txt\",\"r\");` but file does not exist.", "options": ["Returns NULL", "Creates file", "Compilation error", "Runtime crash"], "answer": "A", "explanation": "`fopen` returns NULL if file cannot be opened."},
-    {"id": 93, "text": "Which macro is used for including header files?", "options": ["#include", "#define", "#ifdef", "#pragma"], "answer": "A", "explanation": "`#include` directive pastes the content of a file."},
-    {"id": 94, "text": "Output of `#define SQUARE(x) x*x; printf(\"%d\", SQUARE(2+3));`", "options": ["25", "11", "17", "Error"], "answer": "B", "explanation": "Macro expands to `2+3*2+3` = 2+6+3 = 11."},
-    {"id": 95, "text": "Find error: `#define PI 3.14; float r=2; float area = PI * r * r;`", "options": ["Semicolon in macro definition", "No error", "Wrong macro syntax", "Type mismatch"], "answer": "A", "explanation": "Macro definition should not end with semicolon; it becomes part of replacement text."},
-    {"id": 96, "text": "Which sorting algorithm has O(n²) worst case?", "options": ["Merge sort", "Quick sort", "Bubble sort", "Heap sort"], "answer": "C", "explanation": "Bubble sort always O(n²) worst case. Quick sort can be O(n²) if pivot poor."},
-    {"id": 97, "text": "Output of binary search for 7 in sorted array [2,5,7,9]?", "options": ["Found at index 2", "Not found", "Found at index 3", "Error"], "answer": "A", "explanation": "Binary search finds 7 at index 2 (0‑based)."},
-    {"id": 98, "text": "Find error: `int a[5] = {1,2,3,4,5}; for(i=0;i<=5;i++) printf(\"%d\",a[i]);`", "options": ["Out‑of‑bounds access", "No error", "Wrong loop condition", "Syntax error"], "answer": "A", "explanation": "When i=5, a[5] is out of bounds (valid 0-4)."},
-    {"id": 99, "text": "What does `#ifndef HEADER_H` guard against?", "options": ["Double inclusion", "Compilation error", "Macro redefinition", "None"], "answer": "A", "explanation": "Include guards prevent a header from being included multiple times."},
+{
+    "id": 0,
+    "text": "Which keyword is used to define a function in Python?",
+    "options": ["func", "define", "def", "function"],
+    "answer": "C",
+    "explanation": "'def' is used to define a function."
+},
+{
+    "id": 1,
+    "text": "What is the output of print(type(10))?",
+    "options": ["<class 'int'>", "<class 'float'>", "<class 'number'>", "<class 'integer'>"],
+    "answer": "A",
+    "explanation": "10 is an integer value."
+},
+{
+    "id": 2,
+    "text": "Which of the following is mutable?",
+    "options": ["Tuple", "String", "List", "Integer"],
+    "answer": "C",
+    "explanation": "Lists can be modified after creation."
+},
+{
+    "id": 3,
+    "text": "Which operator performs floor division?",
+    "options": ["/", "//", "%", "**"],
+    "answer": "B",
+    "explanation": "'//' returns the integer quotient."
+},
+{
+    "id": 4,
+    "text": "What is the output of len('Python')?",
+    "options": ["5", "6", "7", "Error"],
+    "answer": "B",
+    "explanation": "The string contains 6 characters."
+},
+{
+    "id": 5,
+    "text": "Which collection does not allow duplicates?",
+    "options": ["List", "Tuple", "Dictionary", "Set"],
+    "answer": "D",
+    "explanation": "Sets store unique elements."
+},
+{
+    "id": 6,
+    "text": "What is the output of 2**4?",
+    "options": ["6", "8", "16", "24"],
+    "answer": "C",
+    "explanation": "2 raised to the power 4 is 16."
+},
+{
+    "id": 7,
+    "text": "Which statement skips the current iteration of a loop?",
+    "options": ["break", "continue", "pass", "return"],
+    "answer": "B",
+    "explanation": "'continue' skips the current iteration."
+},
+{
+    "id": 8,
+    "text": "Which keyword creates a class?",
+    "options": ["object", "new", "class", "Class"],
+    "answer": "C",
+    "explanation": "'class' is the keyword used."
+},
+{
+    "id": 9,
+    "text": "What is the output of bool([])?",
+    "options": ["True", "False", "None", "Error"],
+    "answer": "B",
+    "explanation": "An empty list evaluates to False."
+},
+{
+    "id": 10,
+    "text": "Which function converts a string to an integer?",
+    "options": ["str()", "float()", "int()", "integer()"],
+    "answer": "C",
+    "explanation": "int() converts values to integers."
+},
+{
+    "id": 11,
+    "text": "What is the index of the first element in a Python list?",
+    "options": ["0", "1", "-1", "Depends"],
+    "answer": "A",
+    "explanation": "Python uses zero-based indexing."
+},
+{
+    "id": 12,
+    "text": "Which loop is used when the number of iterations is known?",
+    "options": ["while", "for", "do-while", "repeat"],
+    "answer": "B",
+    "explanation": "for loops are commonly used for fixed iterations."
+},
+{
+    "id": 13,
+    "text": "What is the output of 'abc'.upper()?",
+    "options": ["abc", "ABC", "Abc", "Error"],
+    "answer": "B",
+    "explanation": "upper() converts letters to uppercase."
+},
+{
+    "id": 14,
+    "text": "Which function returns the ASCII value of a character?",
+    "options": ["chr()", "ascii()", "ord()", "asc()"],
+    "answer": "C",
+    "explanation": "ord() returns the Unicode/ASCII code."
+},
+{
+    "id": 15,
+    "text": "Which function converts an ASCII code to a character?",
+    "options": ["char()", "chr()", "ord()", "ascii()"],
+    "answer": "B",
+    "explanation": "chr() converts an integer code to a character."
+},
+{
+    "id": 16,
+    "text": "What is the output of list('abc')?",
+    "options": ["['abc']", "['a','b','c']", "abc", "Error"],
+    "answer": "B",
+    "explanation": "Each character becomes an element."
+},
+{
+    "id": 17,
+    "text": "Which symbol is used for comments in Python?",
+    "options": ["//", "#", "/* */", "--"],
+    "answer": "B",
+    "explanation": "# starts a single-line comment."
+},
+{
+    "id": 18,
+    "text": "What is the output of 10 % 3?",
+    "options": ["3", "1", "0", "10"],
+    "answer": "B",
+    "explanation": "% returns the remainder."
+},
+{
+    "id": 19,
+    "text": "Which data type stores key-value pairs?",
+    "options": ["List", "Tuple", "Dictionary", "Set"],
+    "answer": "C",
+    "explanation": "Dictionaries store data as key-value pairs."
+},
+{
+    "id": 20,
+    "text": "What is the output of len([1,2,3,4])?",
+    "options": ["3", "4", "5", "Error"],
+    "answer": "B",
+    "explanation": "The list contains 4 elements."
+},
+{
+    "id": 21,
+    "text": "Which keyword exits a loop completely?",
+    "options": ["continue", "skip", "break", "return"],
+    "answer": "C",
+    "explanation": "break immediately terminates the loop."
+},
+{
+    "id": 22,
+    "text": "What is the output of 'python'[0]?",
+    "options": ["p", "y", "python", "0"],
+    "answer": "A",
+    "explanation": "Index 0 refers to the first character."
+},
+{
+    "id": 23,
+    "text": "Which function is used to take user input?",
+    "options": ["scan()", "input()", "read()", "get()"],
+    "answer": "B",
+    "explanation": "input() reads input from the user."
+},
+{
+    "id": 24,
+    "text": "What is the output of type([1,2,3])?",
+    "options": ["tuple", "list", "array", "set"],
+    "answer": "B",
+    "explanation": "The object is a list."
+},
+# QUESTIONS 25-49 (OOP + Exception Handling)
+
+{
+    "id": 25,
+    "text": "What does 'self' represent in a class method?",
+    "options": ["Class", "Current Object", "Parent Class", "Module"],
+    "answer": "B",
+    "explanation": "'self' refers to the current object instance."
+},
+{
+    "id": 26,
+    "text": "Which method is called automatically when an object is created?",
+    "options": ["__main__", "__init__", "__newobj__", "__create__"],
+    "answer": "B",
+    "explanation": "__init__ is the constructor."
+},
+{
+    "id": 27,
+    "text": "What is a constructor?",
+    "options": ["Variable", "Loop", "Special method used to initialize objects", "Module"],
+    "answer": "C",
+    "explanation": "Constructors initialize object data."
+},
+{
+    "id": 28,
+    "text": "Which OOP concept allows code reuse?",
+    "options": ["Inheritance", "Polymorphism", "Encapsulation", "Abstraction"],
+    "answer": "A",
+    "explanation": "Inheritance enables code reuse."
+},
+{
+    "id": 29,
+    "text": "Single inheritance means:",
+    "options": ["One child many parents", "One parent one child", "Many parents one child", "Many children many parents"],
+    "answer": "B",
+    "explanation": "A child inherits from one parent."
+},
+{
+    "id": 30,
+    "text": "Multiple inheritance means:",
+    "options": ["One parent", "No parent", "Multiple parents", "Multiple children"],
+    "answer": "C",
+    "explanation": "A child inherits from multiple parents."
+},
+{
+    "id": 31,
+    "text": "Which inheritance type forms a chain of classes?",
+    "options": ["Single", "Multiple", "Multilevel", "Hybrid"],
+    "answer": "C",
+    "explanation": "Grandparent → Parent → Child."
+},
+{
+    "id": 32,
+    "text": "Which inheritance has one parent and multiple children?",
+    "options": ["Hierarchical", "Single", "Multiple", "Hybrid"],
+    "answer": "A",
+    "explanation": "One parent class is inherited by multiple children."
+},
+{
+    "id": 33,
+    "text": "What is encapsulation?",
+    "options": ["Inheritance", "Wrapping data and methods together", "Overloading", "Looping"],
+    "answer": "B",
+    "explanation": "Encapsulation binds data and methods."
+},
+{
+    "id": 34,
+    "text": "How do you indicate a private variable in Python?",
+    "options": ["var", "_var", "__var", "private var"],
+    "answer": "C",
+    "explanation": "Double underscore indicates private members."
+},
+{
+    "id": 35,
+    "text": "Which OOP concept hides implementation details?",
+    "options": ["Encapsulation", "Inheritance", "Abstraction", "Association"],
+    "answer": "C",
+    "explanation": "Abstraction hides internal details."
+},
+{
+    "id": 36,
+    "text": "Which module supports abstraction?",
+    "options": ["abc", "oop", "abstract", "pyabs"],
+    "answer": "A",
+    "explanation": "abc stands for Abstract Base Classes."
+},
+{
+    "id": 37,
+    "text": "What is polymorphism?",
+    "options": ["One interface, many forms", "Data hiding", "Inheritance", "Constructor"],
+    "answer": "A",
+    "explanation": "Polymorphism allows multiple behaviors."
+},
+{
+    "id": 38,
+    "text": "Method overriding occurs when:",
+    "options": ["Child redefines parent method", "Method deleted", "Method overloaded", "Method imported"],
+    "answer": "A",
+    "explanation": "The child provides its own implementation."
+},
+{
+    "id": 39,
+    "text": "Python supports method overloading through:",
+    "options": ["Multiple methods", "Default arguments", "Compiler", "Templates"],
+    "answer": "B",
+    "explanation": "Python uses default arguments instead."
+},
+{
+    "id": 40,
+    "text": "Which decorator defines a class method?",
+    "options": ["@staticmethod", "@classmethod", "@property", "@override"],
+    "answer": "B",
+    "explanation": "Class methods receive cls."
+},
+{
+    "id": 41,
+    "text": "Which decorator defines a static method?",
+    "options": ["@classmethod", "@staticmethod", "@property", "@static"],
+    "answer": "B",
+    "explanation": "Static methods don't use self or cls."
+},
+{
+    "id": 42,
+    "text": "What does cls refer to?",
+    "options": ["Current object", "Class itself", "Constructor", "Parent class"],
+    "answer": "B",
+    "explanation": "cls references the class."
+},
+{
+    "id": 43,
+    "text": "Which method is used to customize object printing?",
+    "options": ["__print__", "__show__", "__str__", "__display__"],
+    "answer": "C",
+    "explanation": "__str__ controls string representation."
+},
+{
+    "id": 44,
+    "text": "Which method overloads the + operator?",
+    "options": ["__plus__", "__sum__", "__add__", "__concat__"],
+    "answer": "C",
+    "explanation": "__add__ handles +."
+},
+{
+    "id": 45,
+    "text": "What is composition?",
+    "options": ["IS-A relationship", "HAS-A relationship", "Inheritance", "Overriding"],
+    "answer": "B",
+    "explanation": "Composition models HAS-A relationships."
+},
+{
+    "id": 46,
+    "text": "Which block is used to handle exceptions?",
+    "options": ["catch", "except", "error", "handle"],
+    "answer": "B",
+    "explanation": "Python uses except."
+},
+{
+    "id": 47,
+    "text": "Which block always executes?",
+    "options": ["try", "except", "raise", "finally"],
+    "answer": "D",
+    "explanation": "finally executes regardless of exceptions."
+},
+{
+    "id": 48,
+    "text": "Which keyword raises an exception?",
+    "options": ["throw", "raise", "error", "exception"],
+    "answer": "B",
+    "explanation": "raise manually generates exceptions."
+},
+{
+    "id": 49,
+    "text": "What exception occurs when dividing by zero?",
+    "options": ["TypeError", "IndexError", "ZeroDivisionError", "ValueError"],
+    "answer": "C",
+    "explanation": "Division by zero raises ZeroDivisionError."
+},
+# QUESTIONS 50-74 (Modules, Iterators, Generators, Closures, Decorators, Regex)
+
+{
+    "id": 50,
+    "text": "Which keyword is used to import a module?",
+    "options": ["include", "using", "import", "require"],
+    "answer": "C",
+    "explanation": "'import' is used to include modules."
+},
+{
+    "id": 51,
+    "text": "Which module provides mathematical functions?",
+    "options": ["random", "math", "os", "sys"],
+    "answer": "B",
+    "explanation": "The math module provides mathematical functions."
+},
+{
+    "id": 52,
+    "text": "Which function returns the square root of a number?",
+    "options": ["math.root()", "math.sqrt()", "sqrt()", "root()"],
+    "answer": "B",
+    "explanation": "math.sqrt() calculates square roots."
+},
+{
+    "id": 53,
+    "text": "Which module generates random numbers?",
+    "options": ["math", "random", "os", "datetime"],
+    "answer": "B",
+    "explanation": "The random module generates random values."
+},
+{
+    "id": 54,
+    "text": "Which function generates a random integer?",
+    "options": ["random()", "rand()", "randint()", "integer()"],
+    "answer": "C",
+    "explanation": "random.randint(a,b) generates a random integer."
+},
+{
+    "id": 55,
+    "text": "Which module works with dates and times?",
+    "options": ["time", "calendar", "datetime", "date"],
+    "answer": "C",
+    "explanation": "datetime handles dates and times."
+},
+{
+    "id": 56,
+    "text": "Which module interacts with the operating system?",
+    "options": ["os", "sys", "platform", "io"],
+    "answer": "A",
+    "explanation": "os provides operating system functionality."
+},
+{
+    "id": 57,
+    "text": "A package is:",
+    "options": ["A file", "A folder containing modules", "A function", "A class"],
+    "answer": "B",
+    "explanation": "Packages organize related modules."
+},
+{
+    "id": 58,
+    "text": "Which statement imports only sqrt from math?",
+    "options": ["import sqrt", "from math import sqrt", "math.sqrt", "include sqrt"],
+    "answer": "B",
+    "explanation": "from math import sqrt imports only sqrt."
+},
+{
+    "id": 59,
+    "text": "What does 'as' do in imports?",
+    "options": ["Deletes module", "Creates alias", "Compiles code", "Exports module"],
+    "answer": "B",
+    "explanation": "'as' creates an alias name."
+},
+{
+    "id": 60,
+    "text": "What is an iterator?",
+    "options": ["A loop", "An object producing values one at a time", "A function", "A module"],
+    "answer": "B",
+    "explanation": "Iterators return elements one by one."
+},
+{
+    "id": 61,
+    "text": "Which function converts an iterable into an iterator?",
+    "options": ["next()", "iter()", "yield()", "iterator()"],
+    "answer": "B",
+    "explanation": "iter() returns an iterator."
+},
+{
+    "id": 62,
+    "text": "Which function gets the next iterator value?",
+    "options": ["next()", "iter()", "yield()", "move()"],
+    "answer": "A",
+    "explanation": "next() retrieves the next item."
+},
+{
+    "id": 63,
+    "text": "Which exception occurs when an iterator is exhausted?",
+    "options": ["ValueError", "IteratorError", "StopIteration", "IndexError"],
+    "answer": "C",
+    "explanation": "StopIteration indicates no more values."
+},
+{
+    "id": 64,
+    "text": "Which keyword creates a generator?",
+    "options": ["return", "yield", "generate", "iterator"],
+    "answer": "B",
+    "explanation": "yield turns a function into a generator."
+},
+{
+    "id": 65,
+    "text": "Why are generators memory efficient?",
+    "options": ["Store all values", "Generate values lazily", "Use cache", "Use recursion"],
+    "answer": "B",
+    "explanation": "Values are produced only when needed."
+},
+{
+    "id": 66,
+    "text": "What is a generator expression?",
+    "options": ["(x for x in range(5))", "[x for x in range(5)]", "{x for x in range(5)}", "None"],
+    "answer": "A",
+    "explanation": "Parentheses create generator expressions."
+},
+{
+    "id": 67,
+    "text": "A closure is:",
+    "options": ["A loop", "A function remembering outer variables", "A class", "A package"],
+    "answer": "B",
+    "explanation": "Closures retain access to outer scope variables."
+},
+{
+    "id": 68,
+    "text": "Which function is returned in a closure?",
+    "options": ["Outer function", "Inner function", "Class method", "Generator"],
+    "answer": "B",
+    "explanation": "Closures typically return inner functions."
+},
+{
+    "id": 69,
+    "text": "What is a decorator?",
+    "options": ["A loop", "A module", "A function modifying another function", "A class"],
+    "answer": "C",
+    "explanation": "Decorators add functionality to functions."
+},
+{
+    "id": 70,
+    "text": "Which symbol is commonly used to apply a decorator?",
+    "options": ["#", "@", "$", "&"],
+    "answer": "B",
+    "explanation": "@decorator_name applies a decorator."
+},
+{
+    "id": 71,
+    "text": "Which module supports regular expressions?",
+    "options": ["regex", "re", "pattern", "regexp"],
+    "answer": "B",
+    "explanation": "The re module provides regex support."
+},
+{
+    "id": 72,
+    "text": "Which function finds all matches in a string?",
+    "options": ["find()", "search()", "findall()", "matchall()"],
+    "answer": "C",
+    "explanation": "findall() returns all matching patterns."
+},
+{
+    "id": 73,
+    "text": "What does the pattern [0-9] represent?",
+    "options": ["Letters", "Digits", "Spaces", "Symbols"],
+    "answer": "B",
+    "explanation": "[0-9] matches digits from 0 to 9."
+},
+{
+    "id": 74,
+    "text": "What does '^' mean in regex?",
+    "options": ["Ends with", "Starts with", "Any character", "Optional"],
+    "answer": "B",
+    "explanation": "^ matches the start of a string."
+},
+# QUESTIONS 75-99 (Collections, NumPy, Pandas)
+
+{
+    "id": 75,
+    "text": "Which module provides Counter?",
+    "options": ["math", "collections", "itertools", "statistics"],
+    "answer": "B",
+    "explanation": "Counter is available in the collections module."
+},
+{
+    "id": 76,
+    "text": "What does Counter do?",
+    "options": ["Sort data", "Count frequencies", "Generate numbers", "Remove duplicates"],
+    "answer": "B",
+    "explanation": "Counter counts occurrences of elements."
+},
+{
+    "id": 77,
+    "text": "Which collection allows efficient insertion from both ends?",
+    "options": ["List", "Tuple", "deque", "Set"],
+    "answer": "C",
+    "explanation": "deque supports fast insertions/removals at both ends."
+},
+{
+    "id": 78,
+    "text": "Which method adds an element to the left side of a deque?",
+    "options": ["append()", "push()", "appendleft()", "insert()"],
+    "answer": "C",
+    "explanation": "appendleft() inserts at the beginning."
+},
+{
+    "id": 79,
+    "text": "What is defaultdict used for?",
+    "options": ["Sorting", "Default values for missing keys", "Encryption", "Inheritance"],
+    "answer": "B",
+    "explanation": "defaultdict avoids KeyError by providing defaults."
+},
+{
+    "id": 80,
+    "text": "Which default factory returns 0?",
+    "options": ["str", "list", "int", "set"],
+    "answer": "C",
+    "explanation": "int() returns 0 by default."
+},
+{
+    "id": 81,
+    "text": "What is NumPy mainly used for?",
+    "options": ["Web development", "Numerical computing", "Networking", "GUI"],
+    "answer": "B",
+    "explanation": "NumPy is designed for numerical and scientific computing."
+},
+{
+    "id": 82,
+    "text": "How is NumPy commonly imported?",
+    "options": ["import numpy", "import np", "import numpy as np", "include numpy"],
+    "answer": "C",
+    "explanation": "The standard alias is np."
+},
+{
+    "id": 83,
+    "text": "Which function creates a NumPy array?",
+    "options": ["np.list()", "np.array()", "np.create()", "np.vector()"],
+    "answer": "B",
+    "explanation": "np.array() creates arrays."
+},
+{
+    "id": 84,
+    "text": "What does ndarray stand for?",
+    "options": ["New Data Array", "N-Dimensional Array", "Numeric Data", "None"],
+    "answer": "B",
+    "explanation": "ndarray means N-Dimensional Array."
+},
+{
+    "id": 85,
+    "text": "Which attribute returns the shape of an array?",
+    "options": ["size", "shape", "length", "ndim"],
+    "answer": "B",
+    "explanation": "shape returns rows and columns."
+},
+{
+    "id": 86,
+    "text": "Which attribute returns the number of dimensions?",
+    "options": ["shape", "size", "ndim", "dtype"],
+    "answer": "C",
+    "explanation": "ndim returns dimensions."
+},
+{
+    "id": 87,
+    "text": "Which function creates an array of zeros?",
+    "options": ["np.empty()", "np.zeros()", "np.null()", "np.zero()"],
+    "answer": "B",
+    "explanation": "np.zeros() creates arrays filled with zeros."
+},
+{
+    "id": 88,
+    "text": "Which function creates an identity matrix?",
+    "options": ["np.identity()", "np.eye()", "Both A and B", "None"],
+    "answer": "C",
+    "explanation": "Both can create identity matrices."
+},
+{
+    "id": 89,
+    "text": "What does reshape() do?",
+    "options": ["Changes values", "Changes dimensions", "Deletes data", "Sorts array"],
+    "answer": "B",
+    "explanation": "reshape changes the array structure."
+},
+{
+    "id": 90,
+    "text": "Which operation performs matrix multiplication?",
+    "options": ["+", "-", "np.dot()", "%"],
+    "answer": "C",
+    "explanation": "np.dot() performs matrix multiplication."
+},
+{
+    "id": 91,
+    "text": "What is broadcasting in NumPy?",
+    "options": ["Sending data", "Array expansion during operations", "Sorting", "Filtering"],
+    "answer": "B",
+    "explanation": "Broadcasting applies operations across arrays of different shapes."
+},
+{
+    "id": 92,
+    "text": "Which function calculates the mean?",
+    "options": ["np.average()", "np.mean()", "Both A and B", "np.sum()"],
+    "answer": "C",
+    "explanation": "Both can calculate averages."
+},
+{
+    "id": 93,
+    "text": "Which library is built on top of NumPy?",
+    "options": ["Flask", "Pandas", "Django", "Tkinter"],
+    "answer": "B",
+    "explanation": "Pandas relies heavily on NumPy."
+},
+{
+    "id": 94,
+    "text": "What is a Pandas Series?",
+    "options": ["2D structure", "1D labeled array", "Database", "Tuple"],
+    "answer": "B",
+    "explanation": "Series is a one-dimensional labeled data structure."
+},
+{
+    "id": 95,
+    "text": "What is a Pandas DataFrame?",
+    "options": ["1D array", "2D tabular structure", "Function", "Iterator"],
+    "answer": "B",
+    "explanation": "DataFrame stores data in rows and columns."
+},
+{
+    "id": 96,
+    "text": "Which function reads a CSV file?",
+    "options": ["pd.read()", "pd.csv()", "pd.read_csv()", "pd.import_csv()"],
+    "answer": "C",
+    "explanation": "pd.read_csv() loads CSV data."
+},
+{
+    "id": 97,
+    "text": "Which function shows the first 5 rows?",
+    "options": ["head()", "top()", "first()", "show()"],
+    "answer": "A",
+    "explanation": "head() displays the first rows."
+},
+{
+    "id": 98,
+    "text": "Which attribute returns rows and columns count?",
+    "options": ["shape", "size", "count", "info"],
+    "answer": "A",
+    "explanation": "shape returns (rows, columns)."
+},
+{
+    "id": 99,
+    "text": "Which function is commonly used to detect missing values?",
+    "options": ["isnull()", "missing()", "empty()", "detectnull()"],
+    "answer": "A",
+    "explanation": "isnull() identifies missing values in a DataFrame."
+}
 ]
